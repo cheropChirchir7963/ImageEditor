@@ -8,56 +8,65 @@ defmodule ImageEditor do
   and returns an images whose pixels have
 
   ## Example
-    iex> ImageEditor.new(2, 2)
+    iex> ImageEditor.create_new_image(2, 2)
     [[O, O], [O, O]]
 
 
   """
-  @spec new(integer(), integer()) :: list()
-  def new(column, row) do
+  @spec create_new_image(integer(), integer()) :: list()
+  def create_new_image(column, row) do
     for _ <- 1..row, do: for(_ <- 1..column, do: O)
   end
 
-  @spec reset_color(list()) :: list()
-  def reset_color(current_image) do
-    Enum.map(current_image, fn x -> Enum.map(x, fn _y -> O end) end)
+  @spec reset_image_color(list()) :: list()
+  def reset_image_color(current_image) do
+    Enum.map(current_image, fn selected_row ->
+      Enum.map(selected_row, fn _selected_pixel -> O end)
+    end)
   end
 
-  @spec color_pixel(list(), integer(), integer(), any()) :: list()
-  def color_pixel(current_image, column, row, color) do
-    x =
+  @spec apply_color(list(), integer(), integer(), any()) :: list()
+  def apply_color(current_image, column, row, color) do
+    new_image =
       current_image
       |> Enum.at(row - 1)
       |> List.replace_at(column - 1, color)
 
-    List.replace_at(current_image, row - 1, x)
+    List.replace_at(current_image, row - 1, new_image)
   end
 
-  @spec horizontal_segment(list(), integer(), integer, integer(), any()) :: list()
-  def horizontal_segment(current_image, column1, column2, row, color) do
+  @spec drawing_horizontal_segment(list(), integer(), integer, integer(), any()) :: list()
+  def drawing_horizontal_segment(current_image, start_column, end_column, row, color) do
     row = row - 1
-    column1 = column1 - 1
-    column2 = column2 - 1
+    start_column = start_column - 1
+    end_column = end_column - 1
 
-    ok =
+    new_image =
       current_image
       |> Enum.at(row)
       |> Enum.with_index()
-      |> Enum.map(fn {c, i} -> if i in column1..column2, do: color, else: c end)
+      |> Enum.map(fn {key, value} ->
+        if value in start_column..end_column, do: color, else: key
+      end)
 
-    List.replace_at(current_image, row, ok)
+    List.replace_at(current_image, row, new_image)
   end
 
-  @spec vertical_segment(list(), integer(), integer, integer(), any()) :: list()
-  def vertical_segment(current_image, column, row1, row2, color) do
-    row1 = row1 - 1
+  @spec drawing_vertical_segment(list(), integer(), integer, integer(), any()) :: list()
+  def drawing_vertical_segment(current_image, column, start_row, end_row, color) do
+    start_row = start_row - 1
     column = column - 1
-    row2 = row2 - 1
+    end_row = end_row - 1
 
     current_image
     |> Enum.with_index()
-    |> Enum.map(fn {k, v} ->
-      if v in row1..row2, do: List.replace_at(k, column, color), else: k
+    |> Enum.map(fn {key, value} ->
+      if value in start_row..end_row, do: List.replace_at(key, column, color), else: key
     end)
   end
+
+  # def fill_region(current_image, column, row, color) do
+  #   current_image
+  #   # |> Enum.map(fn x -> Enum.map(x -> if x == color color, else: x end)end)
+  # end
 end

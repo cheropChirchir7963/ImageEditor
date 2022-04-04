@@ -1,7 +1,7 @@
 defmodule ImageEditor.Cli do
   def parser(["I", column, row]) when is_integer(row) and is_integer(column) do
     row
-    |> ImageEditor.new(column)
+    |> ImageEditor.create_new_image(column)
     |> ImageEditor.Server.start_link()
   end
 
@@ -11,29 +11,29 @@ defmodule ImageEditor.Cli do
 
   def parser(["C"]) do
     ImageEditor.Server.show()
-    |> ImageEditor.reset_color()
+    |> ImageEditor.reset_image_color()
     |> ImageEditor.Server.update_state()
   end
 
   def parser(["L", column, row, color]) when is_integer(row) and is_integer(column) do
     ImageEditor.Server.show()
-    |> ImageEditor.color_pixel(column, row, color)
+    |> ImageEditor.apply_color(column, row, color)
     |> ImageEditor.Server.update_state()
   end
 
-  def parser(["H", column1, column2, row, color]) do
+  def parser(["H", start_column, end_column, row, color]) do
     ImageEditor.Server.show()
-    |> ImageEditor.horizontal_segment(column1, column2, row, color)
+    |> ImageEditor.drawing_horizontal_segment(start_column, end_column, row, color)
     |> ImageEditor.Server.update_state()
   end
 
-  def parser(["V", column, row1, row2, color]) do
+  def parser(["V", column, start_row, end_row, color]) do
     ImageEditor.Server.show()
-    |> ImageEditor.vertical_segment(column, row1, row2, color)
+    |> ImageEditor.drawing_vertical_segment(column, start_row, end_row, color)
     |> ImageEditor.Server.update_state()
   end
 
-   def parser(["X"]) do
+  def parser(["X"]) do
     ImageEditor.Server.stop()
   end
 end
