@@ -14,5 +14,11 @@ defmodule ImageEditor.Cli do
     |> ImageEditor.reset_color()
     |> ImageEditor.Server.update_state()
   end
-  
+
+  def parser(["L", column, row, color]) when is_integer(row) and is_integer(column) do
+    ImageEditor.Server.show()
+    |> ImageEditor.color_pixel(column, row, color)
+    |> ImageEditor.Server.update_state()
+  end
+
 end

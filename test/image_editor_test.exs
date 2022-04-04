@@ -12,4 +12,10 @@ defmodule ImageEditorTest do
     assert ImageEditor.reset_color([[D, D]]) == [[O, O]]
     assert ImageEditor.reset_color([[D, Z], [Z, Z], [Z, O]]) == [[O, O], [O, O], [O, O]]
   end
+
+  test "color pixel X, Y with given color" do
+    assert ImageEditor.color_pixel([[P, P, P]], 1, 1, D) == [[D, P, P]]
+    assert ImageEditor.color_pixel([[J, J, J], [J, L, L]], 2, 1, M) == [[J, M, J], [J, L, L]]
+  end
+  
 end

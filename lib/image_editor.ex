@@ -22,4 +22,15 @@ defmodule ImageEditor do
   def reset_color(current_image) do
     Enum.map(current_image, fn x -> Enum.map(x, fn _y -> O end) end)
   end
+
+  @spec color_pixel(list(), integer(), integer(), any() ) :: list()
+  def color_pixel(current_image, column, row, color) do
+    x =
+      current_image
+      |> Enum.at(row - 1)
+      |> List.replace_at(column - 1, color)
+
+    List.replace_at(current_image, row - 1, x)
+  end
+  
 end
