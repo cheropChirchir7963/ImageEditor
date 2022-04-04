@@ -13,4 +13,8 @@ defmodule ImageEditor.Server do
   def update_state(new_state) do
     Agent.update(__MODULE__, fn _state -> new_state end)
   end
+
+  def stop do
+    Agent.stop(__MODULE__)
+  end
 end
