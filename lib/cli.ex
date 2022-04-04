@@ -4,4 +4,8 @@ defmodule ImageEditor.Cli do
     |> ImageEditor.new(column)
     |> ImageEditor.Server.start_link()
   end
+
+  def parser(["S"]) do
+    ImageEditor.Server.show()
+  end
 end
