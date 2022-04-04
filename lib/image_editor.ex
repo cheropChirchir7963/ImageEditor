@@ -47,4 +47,17 @@ defmodule ImageEditor do
 
     List.replace_at(current_image, row, ok)
   end
+
+  @spec vertical_segment(list(), integer(), integer, integer(), any()) :: list()
+  def vertical_segment(current_image, column, row1, row2, color) do
+    row1 = row1 - 1
+    column = column - 1
+    row2 = row2 - 1
+
+    current_image
+    |> Enum.with_index()
+    |> Enum.map(fn {k, v} ->
+      if v in row1..row2, do: List.replace_at(k, column, color), else: k
+    end)
+  end
 end

@@ -35,4 +35,14 @@ defmodule ImageEditorTest do
              W
            ) == [[J, J, J], [J, J, J], [W, W, W], [J, J, J], [J, J, J]]
   end
+
+  test "draw vertical segment with given color in specified coordinates" do
+    assert ImageEditor.vertical_segment([[O, O]], 1, 1, 1, C) == [[C, O]]
+
+    assert ImageEditor.vertical_segment([[O, O], [Z, O], [O, O]], 1, 2, 3, D) == [
+             [O, O],
+             [D, O],
+             [D, O]
+           ]
+  end
 end

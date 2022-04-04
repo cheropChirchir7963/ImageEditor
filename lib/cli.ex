@@ -26,4 +26,10 @@ defmodule ImageEditor.Cli do
     |> ImageEditor.horizontal_segment(column1, column2, row, color)
     |> ImageEditor.Server.update_state()
   end
+
+  def parser(["V", column, row1, row2, color]) do
+    ImageEditor.Server.show()
+    |> ImageEditor.vertical_segment(column, row1, row2, color)
+    |> ImageEditor.Server.update_state()
+  end
 end
