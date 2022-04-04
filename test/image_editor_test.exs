@@ -7,4 +7,9 @@ defmodule ImageEditorTest do
     assert ImageEditor.new(2, 2) == [[O, O], [O, O]]
     assert ImageEditor.new(1, 3) == [[O], [O], [O]]
   end
+
+  test "reset_color of image to default color" do
+    assert ImageEditor.reset_color([[D, D]]) == [[O, O]]
+    assert ImageEditor.reset_color([[D, Z], [Z, Z], [Z, O]]) == [[O, O], [O, O], [O, O]]
+  end
 end

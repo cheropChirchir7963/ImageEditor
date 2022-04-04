@@ -8,4 +8,11 @@ defmodule ImageEditor.Cli do
   def parser(["S"]) do
     ImageEditor.Server.show()
   end
+
+  def parser(["C"]) do
+    ImageEditor.Server.show()
+    |> ImageEditor.reset_color()
+    |> ImageEditor.Server.update_state()
+  end
+  
 end

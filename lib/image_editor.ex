@@ -17,4 +17,9 @@ defmodule ImageEditor do
   def new(column, row) do
     for _ <- 1..row, do: for(_ <- 1..column, do: O)
   end
+
+  @spec reset_color(list()) :: list()
+  def reset_color(current_image) do
+    Enum.map(current_image, fn x -> Enum.map(x, fn _y -> O end) end)
+  end
 end
