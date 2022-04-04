@@ -1,18 +1,20 @@
 defmodule ImageEditor do
   @moduledoc """
   Documentation for `ImageEditor`.
-  """
 
+  """
   @doc """
-  Hello world.
+  Initializes the new state of an image, takes a two integers which are column and row respectively
+  and returns an images whose pixels have
 
-  ## Examples
+  ## Example
+    iex> ImageEditor.new(2, 2)
+    [[O, O], [O, O]]
 
-      iex> ImageEditor.hello()
-      :world
 
   """
-  def hello do
-    :world
+  @spec new(integer(), integer()) :: list()
+  def new(column, row) do
+    for _ <- 1..row, do: for(_ <- 1..column, do: O)
   end
 end
