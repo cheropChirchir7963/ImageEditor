@@ -23,7 +23,7 @@ defmodule ImageEditor do
     Enum.map(current_image, fn x -> Enum.map(x, fn _y -> O end) end)
   end
 
-  @spec color_pixel(list(), integer(), integer(), any() ) :: list()
+  @spec color_pixel(list(), integer(), integer(), any()) :: list()
   def color_pixel(current_image, column, row, color) do
     x =
       current_image
@@ -32,5 +32,19 @@ defmodule ImageEditor do
 
     List.replace_at(current_image, row - 1, x)
   end
-  
+
+  @spec horizontal_segment(list(), integer(), integer, integer(), any()) :: list()
+  def horizontal_segment(current_image, column1, column2, row, color) do
+    row = row - 1
+    column1 = column1 - 1
+    column2 = column2 - 1
+
+    ok =
+      current_image
+      |> Enum.at(row)
+      |> Enum.with_index()
+      |> Enum.map(fn {c, i} -> if i in column1..column2, do: color, else: c end)
+
+    List.replace_at(current_image, row, ok)
+  end
 end

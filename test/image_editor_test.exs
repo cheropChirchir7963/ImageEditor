@@ -17,5 +17,22 @@ defmodule ImageEditorTest do
     assert ImageEditor.color_pixel([[P, P, P]], 1, 1, D) == [[D, P, P]]
     assert ImageEditor.color_pixel([[J, J, J], [J, L, L]], 2, 1, M) == [[J, M, J], [J, L, L]]
   end
-  
+
+  test "draw horizontal segment with given color in specified coordinates" do
+    assert ImageEditor.horizontal_segment([[O, O]], 1, 1, 1, C) == [[C, O]]
+
+    assert ImageEditor.horizontal_segment([[O, O], [Z, O], [O, O]], 1, 2, 2, D) == [
+             [O, O],
+             [D, D],
+             [O, O]
+           ]
+
+    assert ImageEditor.horizontal_segment(
+             [[J, J, J], [J, J, J], [J, J, J], [J, J, J], [J, J, J]],
+             1,
+             3,
+             3,
+             W
+           ) == [[J, J, J], [J, J, J], [W, W, W], [J, J, J], [J, J, J]]
+  end
 end
