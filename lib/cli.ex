@@ -1,7 +1,7 @@
 defmodule ImageEditor.Cli do
-  def parser([I, column, row]) when is_integer(row) and is_integer(column) do
-    row
-    |> ImageEditor.create_new_image(column)
+  def parser([I, column, row]) when is_integer(column) and is_integer(row) do
+    column
+    |> ImageEditor.create_new_image(row)
     |> ImageEditor.Server.start_link()
   end
 
